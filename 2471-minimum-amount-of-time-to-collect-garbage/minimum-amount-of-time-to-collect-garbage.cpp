@@ -2,7 +2,6 @@ class Solution {
 public:
     int garbageCollection(vector<string>& garbage, vector<int>& travel) {
         
-        int time=0;
 
         int M_idx=0;
         int P_idx=0;
@@ -26,8 +25,8 @@ public:
                     G_idx=i;
                 }
 
-                total++;
             } 
+                total+=k;
         }
         for(int i=1;i<travel.size();i++)
         {
