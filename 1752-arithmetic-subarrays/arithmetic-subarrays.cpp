@@ -4,20 +4,38 @@ public:
     bool check(int i,int j,vector<int>nums)
     {
         vector<int>newv;
+
+        unordered_set<int>s;
         newv.insert(newv.end(),nums.begin()+i,nums.begin()+j+1);
-        sort(newv.begin(),newv.end());
-        for(auto x:newv){
-            cout<<x<<" ";
-        }
-        cout<<endl;
-        for(int k=2;k<newv.size();k++)
+        int a=*min_element(newv.begin(),newv.end());
+        int b=*max_element(newv.begin(),newv.end());
+
+        int n=newv.size();
+
+        for(int k=0;k<newv.size();k++)
         {
-            if(newv[k]-newv[k-1] != newv[k-1]-newv[k-2]){
-                newv.clear();
+            s.insert(newv[k]);
+        }
+
+        if((b-a)%(n-1) != 0)
+        {
+            return false;
+        }
+
+        int d=(b-a)/(n-1);       
+
+        int curr=a+d;
+
+        while(curr < b)
+        {
+            if(s.find(curr)==s.end())
+            {
                 return false;
             }
+            curr=curr+d;
         }
         newv.clear();
+        s.clear();
         return true;
     }
 
