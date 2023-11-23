@@ -14,36 +14,53 @@ public:
     vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
         
 
-        vector<vector<int>>v;
-        if(root==NULL) return v;
+        vector<vector<int>>res;
+        if(root==NULL) return res;
 
-        queue<TreeNode *>q;
-        q.push(root);
-        
-        int level_no=0;
-        while(!q.empty()){
-            int levelSize=q.size();
+        stack<TreeNode *>st1;
+        stack<TreeNode *>st2;
 
-            vector<int>k;
-            for(int i=0;i<levelSize;i++){
+        st1.push(root);
 
-                TreeNode *curr=q.front();
-                q.pop();
-                k.push_back(curr->val);
-
-                if(curr->left!=nullptr){
-                    q.push(curr->left);
+        while(!st1.empty() || !st2.empty()){
+            
+            vector<int>v;
+            while(!st1.empty())
+            {
+                TreeNode *curr=st1.top();
+                st1.pop();
+                v.push_back(curr->val);
+                if(curr->left){
+                     st2.push(curr->left);
                 }
-                if(curr->right!=nullptr){
-                    q.push(curr->right);
+                if(curr->right){                    
+                    st2.push(curr->right);
                 }
             }
-            if(level_no%2!=0){
-                reverse(k.begin(),k.end());
+            if (!v.empty()) {
+                res.push_back(v);
+                v.clear();
             }
-            level_no++;
-            v.push_back(k);
+
+            while(!st2.empty())
+            {
+                TreeNode *curr=st2.top();
+                st2.pop();
+                v.push_back(curr->val);
+                if(curr->right){
+                     st1.push(curr->right);
+                }
+                if(curr->left)
+                {
+                     st1.push(curr->left);
+                }
+            }
+           if (!v.empty()) {
+                res.push_back(v);
+                v.clear();
+            }
         }
-        return v;
+
+        return res;
     }
 };
