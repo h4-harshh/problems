@@ -7,10 +7,6 @@ public:
 
         sort(piles.begin(),piles.end());
 
-        if(n==3){
-            return piles[1];
-        }
-
         int flag=n/3;
 
         for(int i=n-2;i>=flag;i-=2){
