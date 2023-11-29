@@ -35,14 +35,29 @@ public:
 
         int result=INT_MIN;
 
-        for(auto x:mp)
-        {
-            result=max(result,x.second);
-        }
+        // for(auto x:mp)
+        // {
+        //     result=max(result,x.second);
+        // }
 
+        // for(auto x:mp)
+        // {
+        //     if(x.second==result)
+        //     {
+        //         v.push_back(x.first);
+        //     }
+        // }
+        
+        int curr_freq=0;
         for(auto x:mp)
         {
-            if(x.second==result)
+            if(curr_freq<x.second)
+            {
+                v.clear();
+                v.push_back(x.first);
+                curr_freq=x.second;
+            }
+            else if(curr_freq==x.second)
             {
                 v.push_back(x.first);
             }
