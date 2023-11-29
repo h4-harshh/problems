@@ -12,57 +12,44 @@
 class Solution {
 public:
 
-     unordered_map<int,int>mp;
+    int curr_num=0;
+    int curr_freq=0;
+    int max_freq=0;
+    vector<int>result;
 
-    void traverse(TreeNode *root)
+    void dfs(TreeNode *root)
     {
-            
-        if(root!=nullptr){
+        if(root!=nullptr)
+        {
+            dfs(root->left);
 
-            mp[root->val]++;
-            traverse(root->left);
-            traverse(root->right);
+            if(root->val==curr_num)
+            {
+                curr_freq++;
+            }
+            else{
+                curr_num=root->val;
+                curr_freq=1;
+            }
+
+            if(max_freq < curr_freq)
+            {
+                result={};
+                max_freq=curr_freq;
+            }
+            if(max_freq == curr_freq)
+            {
+                result.push_back(root->val);
+            }
+
+            dfs(root->right);
         }
     }
 
     vector<int> findMode(TreeNode* root) {
         
-        vector<int>v;
+        dfs(root);
 
-        if(root==NULL) return v;
-
-       traverse(root);
-
-        int result=INT_MIN;
-
-        // for(auto x:mp)
-        // {
-        //     result=max(result,x.second);
-        // }
-
-        // for(auto x:mp)
-        // {
-        //     if(x.second==result)
-        //     {
-        //         v.push_back(x.first);
-        //     }
-        // }
-        
-        int curr_freq=0;
-        for(auto x:mp)
-        {
-            if(curr_freq<x.second)
-            {
-                v.clear();
-                v.push_back(x.first);
-                curr_freq=x.second;
-            }
-            else if(curr_freq==x.second)
-            {
-                v.push_back(x.first);
-            }
-        }
-
-        return v;
+        return result;
     }
 };
